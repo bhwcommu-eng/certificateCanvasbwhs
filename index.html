@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>เกียรติบัตรอิเล็กทรอนิกส์</title>
+  <style>
+    body {
+      font-family: "Sarabun", sans-serif;
+      text-align: center;
+      background: #f9f9f9;
+    }
+    #certificateCanvas {
+      max-width: 90%;
+      border: 1px solid #ddd;
+      margin-top: 20px;
+    }
+    input {
+      padding: 8px;
+      margin: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>สร้างเกียรติบัตรของคุณ</h1>
+  <input type="text" id="nameInput" placeholder="พิมพ์ชื่อของคุณ">
+  <button onclick="drawCertificate()">สร้างเกียรติบัตร</button>
+  <br>
+  <canvas id="certificateCanvas" width="1086" height="768"></canvas>
+  <br>
+  <button onclick="downloadCertificate()">ดาวน์โหลด</button>
+
+  <script>
+    const canvas = document.getElementById("certificateCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const certificateImg = new Image();
+    certificateImg.src = "certificate.jpg"; // ตั้งชื่อไฟล์ภาพในโปรเจกต์
+
+    certificateImg.onload = function() {
+      ctx.drawImage(certificateImg, 0, 0, canvas.width, canvas.height);
+    };
+
+    function drawCertificate() {
+      const name = document.getElementById("nameInput").value;
+      ctx.drawImage(certificateImg, 0, 0, canvas.width, canvas.height);
+      ctx.font = "bold 40px Sarabun";
+      ctx.fillStyle = "black";
+      ctx.textAlign = "center";
+      ctx.fillText(name, canvas.width / 2, canvas.height / 2 + 30); 
+    }
+
+    function downloadCertificate() {
+      const link = document.createElement("a");
+      link.download = "certificate.png";
+      link.href = canvas.toDataURL();
+      link.click();
+    }
+  </script>
+</body>
+</html>
